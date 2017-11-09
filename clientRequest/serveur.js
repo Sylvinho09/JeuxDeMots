@@ -17,20 +17,31 @@ function emitRequest(givenUri, callback) {
             var PAGE_ENCODING = "ISO-8859-1";
             var body = iconv.decode(html, PAGE_ENCODING);
             var $ = cheerio.load(body, { decodeEntities: false });
-            let CODE = $('def').html();
+            let CODE = $('def');
+            console.log(CODE.html())
+            //on peut aussi remplacer CODE par $('def') ci-dessous
+            /*CODE.each(function()
+            {
+               // console.log("size",$(this).find('br').length);
+               let rbr= $(this).find('br').remove();
+                console.log(rbr.html())
+            })*/
+
+            /*console.log(CODE.html())
+            let CODE2= CODE.remove('br').html();
+            console.log(CODE2);*/
             
-            return callback(CODE);
+            return callback($.html());
         }
 
     });
-    //   let value0 = C('CODE').html();
 
 
 }
 
 app.get("/:value", function (req, res) {
     var value = req.params.value;
-    console.log("valeur de value " + value);
+    //console.log("valeur de value " + value);
 
 
     res.setHeader('Acces-Control-Allow-Origin', '*');
@@ -38,7 +49,7 @@ app.get("/:value", function (req, res) {
     let uri = "http://www.jeuxdemots.org/rezo-dump.php?gotermsubmit=Chercher&gotermrel=" + value + "&rel=";
 
     emitRequest(uri, function (body) {
-        console.log("VALEUR DE body " + body)
+     //   console.log("VALEUR DE body " + body)
         res.end(body);
     });
 
