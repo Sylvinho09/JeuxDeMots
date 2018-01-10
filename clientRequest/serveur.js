@@ -20,7 +20,7 @@ var keyFileStorage = require("key-file-storage");
 var kfs = keyFileStorage("/Users/sylvinho/Documents/M2/EAppJDM/Cache", true);
 
 var months = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout", "Septembre", "Octobre", "Novembre", "Decembre"]
-var nbMaxFiles = 2000;
+var nbMaxFiles = 3;
 
 /**
  * voir https://www.npmjs.com/package/key-file-storage
@@ -68,7 +68,7 @@ app.get("/:value", function (req, res) {
     //les mois vont de 0 à 11
     let d = new Date();
 
-    console.log([months[d.getMonth()]] + "/")
+    /*console.log([months[d.getMonth()]] + "/")
     if (d.getMonth() == 0) {
         let precedentMonth = kfs[months[11] + "/"];
         if (precedentMonth.length > 0) {
@@ -93,7 +93,7 @@ app.get("/:value", function (req, res) {
             kfs['compteur'] = 0;
 
         }
-    }
+    }*/
 
     let finalValue = "";
     let values = value.split(" ")
@@ -112,10 +112,10 @@ app.get("/:value", function (req, res) {
     res.setHeader('Acces-Control-Allow-Origin', '*');
 
     //on vérifie si le fichier a deja été enregistré
-    if (months[d.getMonth()] + "/" + finalValue in kfs) {
+    if (/*months[d.getMonth()] + "/" + */finalValue in kfs) {
         console.log("Mot déjà demandé, je le récupère dans les fichiers !")
         // console.log("deja present, je retourne la valeur dans le fichier ", kfs[finalValue]);
-        res.end(kfs[months[d.getMonth()] + "/" + finalValue]);
+        res.end(kfs[/*months[d.getMonth()] + "/" + */finalValue]);
     }
     else {
         // res.setHeader("Content-type", "text/plain ; charset=ISO-8859-1");
@@ -130,15 +130,15 @@ app.get("/:value", function (req, res) {
 
             //si le compteur est à 2000 (correspondant à 2000 recherches de mots différents), on vide le dossier de fichiers 
             if (parseInt(kfs['compteur']) == nbMaxFiles) {
-                console.log("nombre max de fichiers atteint !", d.getMonth(), months[d.getMonth()] + "/")
+                console.log("nombre max de fichiers atteint !")
                 console.log("ok")
-                console.log("dossier "+kfs[months[d.getMonth()] + "/"]);
-                new kfs(months[d.getMonth()] + "/*", function () {
+                //console.log("dossier "+kfs[months[d.getMonth()] + "/"]);
+                new kfs("./*", function () {
                     console.log("ok")
                     kfs['compteur'] = 1;
                     console.log("ok")
 
-                    kfs[months[d.getMonth()] + "/" + finalValue] = body;
+                    kfs[finalValue] = body;
                     console.log("ok")
 
                 });
@@ -148,7 +148,7 @@ app.get("/:value", function (req, res) {
             //sinon on l'incrémente
             else {
                 kfs['compteur'] = parseInt(kfs['compteur']) + 1;
-                kfs[months[d.getMonth()] + "/" + finalValue] = body;
+                kfs[finalValue] = body;
 
             }
 
