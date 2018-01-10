@@ -20,7 +20,7 @@ var keyFileStorage = require("key-file-storage");
 var kfs = keyFileStorage("/Users/sylvinho/Documents/M2/EAppJDM/Cache", true);
 
 var months = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout", "Septembre", "Octobre", "Novembre", "Decembre"]
-var nbMaxFiles = 3;
+var nbMaxFiles = 2000;
 
 /**
  * voir https://www.npmjs.com/package/key-file-storage
