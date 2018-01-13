@@ -1,0 +1,16 @@
+{
+  "name": "clientrequest",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node serveur.js"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
+    "cors": "^2.8.4",
+    "express": "^4.16.2",
+    "key-file-storage": "^2.1.5",
+    "mongodb": "^3.0.1",
+    "request": "^2.83.0"
+  }
+}

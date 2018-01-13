@@ -17,7 +17,8 @@ var keyFileStorage = require("key-file-storage");
 /**
  * ATTENTION A BIEN SEPCIFIER LE BON CHEMIN
  */
-var kfs = keyFileStorage("/Users/sylvinho/Documents/M2/EAppJDM/Cache", true);
+//var kfs = keyFileStorage("/Users/sylvinho/Documents/M2/EAppJDM/Cache", true);
+var kfs = keyFileStorage(__dirname.toString()+"Cache", true);
 
 var months = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout", "Septembre", "Octobre", "Novembre", "Decembre"]
 var nbMaxFiles = 2000;
@@ -28,7 +29,8 @@ var nbMaxFiles = 2000;
 
 
 if (!kfs['compteur']) {
-    console.log("Création du compteur")
+    
+    console.log("Création du compteur");
     kfs['compteur'] = 0;
 }
 
