@@ -8,8 +8,9 @@ var iconv = require("iconv-lite");
 
 var assert = require("assert");
 var MongoClient = require("mongodb").MongoClient;
-//var url = "mongodb://localhost:27017/JeuxDeMots";
-var url = "mongodb://localhost:27017/";
+
+//var url = "mongodb://localhost:27018/JeuxDeMots";
+var url = "mongodb://localhost:27018/";
 
 var cheerio = require("cheerio");
 var keyFileStorage = require("key-file-storage");
@@ -64,7 +65,7 @@ function emitRequest(givenUri, callback) {
 
 }
 
-app.get("/:value", function (req, res) {
+app.get("/Words/:value", function (req, res) {
     var value = req.params.value;
 
     //les mois vont de 0 à 11
@@ -167,8 +168,10 @@ app.get("/:value", function (req, res) {
 
 });
 
+//console.log("ICI");
 MongoClient.connect(url, function (err, db) {
-
+//console.log("ICI", err);
+//console.log("DB :",db);
     //ne pas se référer au projet vente en ligne pour la ligne ci dessous
     /*
     In mongodb version >= 3.0, That database variable is actually the parent object 
@@ -176,14 +179,27 @@ MongoClient.connect(url, function (err, db) {
      To access the correct object, you need to reference your database name
     */
     let database = db.db("JeuxDeMots");
-    assert.equal(null, err);
-    app.get("/Word/:val", function (req, res) {
+	//console.log("DATABASE", database);
+    //assert.equal(null, err);
+    app.get("/Words/Word/:val", function (req, res) {
+	console.log("REQUETE RECUE");
         let value = req.params.val;
-        //console.log("value", value)
-        //var cursor = database.collection("words").find().sort({"coeff":-1}).limit(5);
+	
+        console.log("VALUE", value)
+
+
+        //var cursor = db.collection("words").find().sort({"coeff":-1}).limit(5);
         var cursor = database.collection("words").find({ word: { $regex: "^" + value, $options: "i" } }).sort({ "coeff": -1 }).limit(5);
-        var resultat = [];
+
+       	console.log("CURSOR SIZE", cursor.length);
+	database.collection("words").count(function(e,count)
+{
+console.log("SIZE :",count);
+});
+
+var resultat = [];
         cursor.each(function (err, doc) {
+
             assert.equal(null, err);
             if (doc != null) {
 

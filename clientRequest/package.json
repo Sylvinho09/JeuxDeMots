@@ -10,7 +10,7 @@
     "cors": "^2.8.4",
     "express": "^4.16.2",
     "key-file-storage": "^2.1.5",
-    "mongodb": "^3.0.1",
+    "mongodb": "^2.2.34",
     "request": "^2.83.0"
   }
 }
